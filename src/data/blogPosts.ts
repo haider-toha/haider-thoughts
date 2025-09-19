@@ -12,7 +12,7 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
   {
     id: "1",
-    title: "The Two Faces of Stillness",
+    title: "The Two Faces of Desire",
     excerpt: "So, is a state of low desire actually a problem? From within, if I am truly content, resting in a quiet ease within my own skin, who can claim that I suffer? Why should my lack of wanting be treated as a deficiency if it comes with a profound sense of sufficiency? The trouble seems to arise only when I begin to compare myself to others, or when I begin to want what I do not have. It is only at that threshold, when lack intrudes upon contentment, that restlessness and with it suffering, begins.",
     content: `So, is a state of low desire actually a problem? From within, if I am truly content, resting in a quiet ease within my own skin, who can claim that I suffer? Why should my lack of wanting be treated as a deficiency if it comes with a profound sense of sufficiency? The trouble seems to arise only when I begin to compare myself to others, or when I begin to want what I do not have. It is only at that threshold, when lack intrudes upon contentment, that restlessness and with it suffering, begins.
 
@@ -47,7 +47,7 @@ So, is low desire a problem? Islamic philosophy resists the simplicity of a yes 
 The conclusion is subtle yet profound. The problem is never the quantity of desire but its quality and orientation. Desire is like water. In one form, it nourishes, purifies and sustains life. In another, it floods, drowns and destroys. The task is not to drain the river but to channel it.
 
 Thus, the question of desire becomes not merely psychological but spiritual. The challenge is to discern which quiet we are living in; is it the quiet of fulfillment, or the quiet of neglect.`,
-    date: "September 19, 2025",
+    date: "September 6, 2025",
     readTime: "10 min read",
     category: "Philosophy",
     slug: "the-nuance-of-low-desire-in-islamic-thought",

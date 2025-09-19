@@ -76,10 +76,17 @@ const Index = () => {
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
                 {featuredPost.excerpt}
               </p>
-              <div className="flex items-center gap-4 text-sm text-muted-foreground font-mono">
-                <time>{featuredPost.date}</time>
-                <span>•</span>
-                <span>{featuredPost.readTime}</span>
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-4 text-sm text-muted-foreground font-mono">
+                  <time>{featuredPost.date}</time>
+                  <span>•</span>
+                  <span>{featuredPost.readTime}</span>
+                  <span>•</span>
+                  <span>{featuredPost.content.split(/\s+/).length.toLocaleString()} words</span>
+                </div>
+                <div className="text-xs text-muted-foreground/70 font-mono">
+                  Click to read in focus mode →
+                </div>
               </div>
             </article>
           </button>
@@ -89,10 +96,20 @@ const Index = () => {
       {/* Footer */}
       <footer className="border-t border-border py-12 mt-16">
         <div className="container mx-auto px-6">
-          <div className="max-w-6xl flex items-center justify-start">
-            <p className="text-muted-foreground font-mono text-sm">
-              Crafted with curiosity & <span className="text-primary"><code dangerouslySetInnerHTML={{ __html: '&lt;code /&gt;' }} /></span>
-            </p>
+          <div className="max-w-6xl">
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center gap-4 text-xs text-muted-foreground font-mono">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                  <span>Last updated {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                </div>
+                <span>•</span>
+                <span>By Haider Toha</span>
+              </div>
+              <p className="text-muted-foreground font-mono text-sm">
+                Crafted with curiosity & <span className="text-primary"><code dangerouslySetInnerHTML={{ __html: '&lt;code /&gt;' }} /></span>
+              </p>
+            </div>
           </div>
         </div>
       </footer>

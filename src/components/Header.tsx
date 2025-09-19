@@ -1,16 +1,18 @@
 import { Link } from "react-router-dom";
+import { ModeToggle } from "./ModeToggle";
 
 const Header = () => {
   return (
     <header className="w-full border-b border-border sticky top-0 bg-background/80 backdrop-blur-lg z-50">
       <div className="container mx-auto px-6 py-4">
-        <nav className="flex items-center justify-start">
+        <nav className="flex items-center justify-between">
           <Link 
             to="/" 
             className="text-xl font-mono font-semibold tracking-tight hover:text-primary transition-colors"
           >
             haider<span className="text-primary">.</span>/thoughts
           </Link>
+          <ModeToggle />
         </nav>
       </div>
     </header>

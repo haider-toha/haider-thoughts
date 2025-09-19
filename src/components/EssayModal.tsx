@@ -24,11 +24,20 @@ interface EssayModalProps {
 const EssayModal = ({ post, isOpen, onClose }: EssayModalProps) => {
   const [readingProgress, setReadingProgress] = useState(0);
   const contentRef = useRef<HTMLDivElement | null>(null);
+  const elementsRef = useRef<NodeListOf<HTMLElement> | []>([]);
 
-  // Reset progress when modal closes
+  // Reset progress and styles when modal opens or closes
   useEffect(() => {
     if (!isOpen) {
       setReadingProgress(0);
+      elementsRef.current.forEach(el => el.classList.remove('is-read'));
+    } else {
+      // Get all content elements once the modal is open
+      setTimeout(() => {
+        if (contentRef.current) {
+          elementsRef.current = contentRef.current.querySelectorAll('.essay-content p, .essay-content h1, .essay-content h2, .essay-content h3, .essay-content ol, .essay-content ul');
+        }
+      }, 300);
     }
   }, [isOpen]);
 
@@ -36,8 +45,25 @@ const EssayModal = ({ post, isOpen, onClose }: EssayModalProps) => {
     const target = e.currentTarget;
     const scrollTop = target.scrollTop;
     const scrollHeight = target.scrollHeight - target.clientHeight;
+    
+    // Update progress bar
     const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
     setReadingProgress(progress);
+
+    // Update text opacity
+    const modalRect = target.getBoundingClientRect();
+    const readThreshold = scrollTop + (modalRect.height * 0.3); // Elements are "read" when they're 30% down the viewport
+    
+    elementsRef.current.forEach((el) => {
+      const elementTop = el.offsetTop;
+      const elementBottom = elementTop + el.offsetHeight;
+      
+      if (elementBottom < readThreshold) {
+        el.classList.add('is-read');
+      } else {
+        el.classList.remove('is-read');
+      }
+    });
   };
 
   if (!post) return null;

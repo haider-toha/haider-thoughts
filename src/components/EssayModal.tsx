@@ -63,50 +63,24 @@ const EssayModal = ({ post, isOpen, onClose }: EssayModalProps) => {
     };
   }, [isOpen, onClose, post]);
 
-  // Handle Deep-linking and Style Reset
+  // Handle Style Reset and Element Querying
   useEffect(() => {
     if (!isOpen) {
       setReadingProgress(0);
       elementsRef.current.forEach(el => {
         el.classList.remove('is-read');
-        const deepLink = el.querySelector('.deep-link');
-        if (deepLink) {
-          el.removeChild(deepLink);
-        }
       });
     } else {
       setTimeout(() => {
         if (contentRef.current) {
           const contentContainer = contentRef.current.querySelector('.essay-content > div');
-          if (!contentContainer) return;
-
-          const elements = contentContainer.querySelectorAll('p, h2, h3');
-          elements.forEach((el, index) => {
-            const htmlEl = el as HTMLElement;
-            const text = el.textContent?.toLowerCase().slice(0, 20).replace(/\s+/g, '-') || `el-${index}`;
-            const id = `thought-${post?.slug}-${text.replace(/[^a-z0-9-]/g, '')}`;
-            htmlEl.id = id;
-
-            const link = document.createElement('a');
-            link.href = `#${id}`;
-            link.className = 'deep-link absolute -left-6 top-0 text-muted-foreground opacity-0 group-hover:opacity-50 transition-opacity no-underline';
-            link.innerHTML = '#';
-            link.onclick = (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              const url = `${window.location.origin}#${id}`;
-              navigator.clipboard.writeText(url);
-              // You could add a "Copied!" tooltip here
-            };
-            
-            htmlEl.classList.add('relative', 'group');
-            htmlEl.prepend(link);
-          });
-          elementsRef.current = elements as NodeListOf<HTMLElement>;
+          if (contentContainer) {
+            elementsRef.current = contentContainer.querySelectorAll('p, h2, h3, ol, ul') as NodeListOf<HTMLElement>;
+          }
         }
       }, 300);
     }
-  }, [isOpen, post]);
+  }, [isOpen]);
 
   const handleScroll = (e: UIEvent<HTMLDivElement>) => {
     const target = e.currentTarget;

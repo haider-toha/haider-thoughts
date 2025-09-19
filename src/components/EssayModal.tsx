@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Clock, BookOpen } from "lucide-react";
+import { X, Clock, BookOpen, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useState, useEffect, useRef, UIEvent } from "react";
@@ -23,23 +23,90 @@ interface EssayModalProps {
 
 const EssayModal = ({ post, isOpen, onClose }: EssayModalProps) => {
   const [readingProgress, setReadingProgress] = useState(0);
+  const [isCopied, setIsCopied] = useState(false);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const elementsRef = useRef<NodeListOf<HTMLElement> | []>([]);
+  const scrollTimeout = useRef<number | null>(null);
 
-  // Reset progress and styles when modal opens or closes
+  // Handle Keyboard Shortcuts and Saved Scroll Position
+  useEffect(() => {
+    // Restore scroll position when modal opens
+    if (isOpen && contentRef.current && post) {
+      const savedPosition = localStorage.getItem(`reading-position-${post.slug}`);
+      if (savedPosition) {
+        contentRef.current.scrollTop = parseInt(savedPosition, 10);
+      }
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+      if (contentRef.current) {
+        if (event.key === 'ArrowDown') {
+          event.preventDefault();
+          contentRef.current.scrollBy({ top: 40, behavior: 'smooth' });
+        }
+        if (event.key === 'ArrowUp') {
+          event.preventDefault();
+          contentRef.current.scrollBy({ top: -40, behavior: 'smooth' });
+        }
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose, post]);
+
+  // Handle Deep-linking and Style Reset
   useEffect(() => {
     if (!isOpen) {
       setReadingProgress(0);
-      elementsRef.current.forEach(el => el.classList.remove('is-read'));
+      elementsRef.current.forEach(el => {
+        el.classList.remove('is-read');
+        const deepLink = el.querySelector('.deep-link');
+        if (deepLink) {
+          el.removeChild(deepLink);
+        }
+      });
     } else {
-      // Get all content elements once the modal is open
       setTimeout(() => {
         if (contentRef.current) {
-          elementsRef.current = contentRef.current.querySelectorAll('.essay-content p, .essay-content h1, .essay-content h2, .essay-content h3, .essay-content ol, .essay-content ul');
+          const contentContainer = contentRef.current.querySelector('.essay-content > div');
+          if (!contentContainer) return;
+
+          const elements = contentContainer.querySelectorAll('p, h2, h3');
+          elements.forEach((el, index) => {
+            const htmlEl = el as HTMLElement;
+            const text = el.textContent?.toLowerCase().slice(0, 20).replace(/\s+/g, '-') || `el-${index}`;
+            const id = `thought-${post?.slug}-${text.replace(/[^a-z0-9-]/g, '')}`;
+            htmlEl.id = id;
+
+            const link = document.createElement('a');
+            link.href = `#${id}`;
+            link.className = 'deep-link absolute -left-6 top-0 text-muted-foreground opacity-0 group-hover:opacity-50 transition-opacity no-underline';
+            link.innerHTML = '#';
+            link.onclick = (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              const url = `${window.location.origin}#${id}`;
+              navigator.clipboard.writeText(url);
+              // You could add a "Copied!" tooltip here
+            };
+            
+            htmlEl.classList.add('relative', 'group');
+            htmlEl.prepend(link);
+          });
+          elementsRef.current = elements as NodeListOf<HTMLElement>;
         }
       }, 300);
     }
-  }, [isOpen]);
+  }, [isOpen, post]);
 
   const handleScroll = (e: UIEvent<HTMLDivElement>) => {
     const target = e.currentTarget;
@@ -50,9 +117,19 @@ const EssayModal = ({ post, isOpen, onClose }: EssayModalProps) => {
     const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
     setReadingProgress(progress);
 
+    // Save scroll position (throttled)
+    if (scrollTimeout.current) {
+      clearTimeout(scrollTimeout.current);
+    }
+    scrollTimeout.current = window.setTimeout(() => {
+      if (post) {
+        localStorage.setItem(`reading-position-${post.slug}`, scrollTop.toString());
+      }
+    }, 250);
+
     // Update text opacity
     const modalRect = target.getBoundingClientRect();
-    const readThreshold = scrollTop + (modalRect.height * 0.3); // Elements are "read" when they're 30% down the viewport
+    const readThreshold = scrollTop + (modalRect.height * 0.3);
     
     elementsRef.current.forEach((el) => {
       const elementTop = el.offsetTop;
@@ -64,6 +141,14 @@ const EssayModal = ({ post, isOpen, onClose }: EssayModalProps) => {
         el.classList.remove('is-read');
       }
     });
+  };
+
+  const handleShare = () => {
+    if (!post) return;
+    const url = `${window.location.origin}/post/${post.slug}`;
+    navigator.clipboard.writeText(url);
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
   };
 
   if (!post) return null;
@@ -142,6 +227,13 @@ const EssayModal = ({ post, isOpen, onClose }: EssayModalProps) => {
                         {wordCount.toLocaleString()} words
                       </div>
                     </div>
+                  </div>
+                  <div className="flex items-center gap-4 text-xs text-muted-foreground font-mono mt-2">
+                    <button onClick={handleShare} className="flex items-center gap-1 hover:text-primary transition-colors">
+                      <Share2 className="h-3 w-3" />
+                      Share
+                    </button>
+                    {isCopied && <span className="text-xs text-primary/80">Copied!</span>}
                   </div>
                 </header>
 

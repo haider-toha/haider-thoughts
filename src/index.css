@@ -135,15 +135,32 @@ All colors MUST be HSL.
   }
 
   .essay-content a {
+    position: relative;
     color: hsl(var(--primary));
     text-decoration: none;
-    border-bottom: 1px solid hsl(var(--primary) / 0.3);
-    transition: all 0.2s ease;
+    transition: color 0.2s ease;
+  }
+
+  .essay-content a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: hsl(var(--primary));
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
   }
 
   .essay-content a:hover {
-    border-bottom-color: hsl(var(--primary));
-    background: hsl(var(--primary) / 0.05);
+    color: hsl(var(--primary));
+  }
+
+  .essay-content a:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
   }
 
   /* Style for the fade-on-scroll effect */
@@ -157,5 +174,30 @@ All colors MUST be HSL.
   }
   .is-read {
     opacity: 0.4;
+  }
+
+  /* Custom selection color */
+  ::selection {
+    background: hsl(var(--primary) / 0.2);
+    color: hsl(var(--foreground));
+  }
+
+  /* Improved focus outline */
+  :focus-visible {
+    outline: 2px solid hsl(var(--primary) / 0.5);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }

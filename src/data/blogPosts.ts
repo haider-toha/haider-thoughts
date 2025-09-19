@@ -50,6 +50,6 @@ Thus, the question of desire becomes not merely psychological but spiritual. The
     date: "September 6, 2025",
     readTime: "10 min read",
     category: "Philosophy",
-    slug: "the-nuance-of-low-desire-in-islamic-thought",
+    slug: "The-Two-Faces-of-Desire",
   },
 ];

@@ -23,18 +23,8 @@ const Index = () => {
   };
 
   // Handle ESC key to close modal
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        closeModal();
-      }
-    };
-
-    if (isModalOpen) {
-      document.addEventListener("keydown", handleKeyDown);
-      return () => document.removeEventListener("keydown", handleKeyDown);
-    }
-  }, [isModalOpen]);
+  // The keyboard listener has been moved to the EssayModal component
+  // to keep all modal-related logic self-contained.
 
   if (!featuredPost) {
     return (

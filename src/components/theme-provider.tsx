@@ -32,8 +32,16 @@ export function ThemeProvider({
 
   useEffect(() => {
     const root = window.document.documentElement
+    const favicon = document.querySelector("link[rel='icon']") as HTMLLinkElement
 
-    root.classList.remove("light", "dark")
+    const applyTheme = (themeToApply: "light" | "dark") => {
+      root.classList.remove("light", "dark")
+      root.classList.add(themeToApply)
+      
+      if (favicon) {
+        favicon.href = themeToApply === "dark" ? "/favicon-dark.svg" : "/favicon.svg"
+      }
+    }
 
     if (theme === "system") {
       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
@@ -41,11 +49,20 @@ export function ThemeProvider({
         ? "dark"
         : "light"
 
-      root.classList.add(systemTheme)
-      return
-    }
+      applyTheme(systemTheme)
 
-    root.classList.add(theme)
+      // Listen for system theme changes
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
+      const handleChange = () => {
+        const newSystemTheme = mediaQuery.matches ? "dark" : "light"
+        applyTheme(newSystemTheme)
+      }
+
+      mediaQuery.addEventListener("change", handleChange)
+      return () => mediaQuery.removeEventListener("change", handleChange)
+    } else {
+      applyTheme(theme)
+    }
   }, [theme])
 
   const value = {

@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Clock, BookOpen, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useState, useEffect, useRef, UIEvent } from "react";
+import React, { useState, useEffect, useRef, UIEvent } from "react";
 
 interface BlogPost {
   id: string;
@@ -265,4 +265,4 @@ const EssayModal = ({ post, isOpen, onClose }: EssayModalProps) => {
   );
 };
 
-export default EssayModal;
+export default React.memo(EssayModal);

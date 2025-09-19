@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ModeToggle } from "./ModeToggle";
+import React from "react";
 
 const Header = () => {
   return (
@@ -19,4 +20,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default React.memo(Header);

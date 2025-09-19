@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
-import EssayModal from "@/components/EssayModal";
 import { blogPosts } from "@/data/blogPosts";
+
+const EssayModal = lazy(() => import("@/components/EssayModal"));
 
 const Index = () => {
   // Since there is only one post, we'll feature it directly.
@@ -105,11 +106,13 @@ const Index = () => {
       </footer>
 
       {/* Essay Modal */}
-      <EssayModal 
-        post={selectedPost}
-        isOpen={isModalOpen}
-        onClose={closeModal}
-      />
+      <Suspense fallback={null}>
+        <EssayModal 
+          post={selectedPost}
+          isOpen={isModalOpen}
+          onClose={closeModal}
+        />
+      </Suspense>
     </div>
   );
 };

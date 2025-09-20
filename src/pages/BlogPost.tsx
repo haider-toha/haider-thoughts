@@ -10,7 +10,7 @@ const BlogPost = () => {
   const post = blogPosts.find(p => p.slug === slug);
 
   if (!post) {
-    return <Navigate to="/blog" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return (

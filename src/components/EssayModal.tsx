@@ -3,17 +3,7 @@ import { X, Clock, BookOpen, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import React, { useState, useEffect, useRef, UIEvent } from "react";
-
-interface BlogPost {
-  id: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  date: string;
-  readTime: string;
-  category: string;
-  slug: string;
-}
+import { BlogPost } from "@/data/blogPosts";
 
 interface EssayModalProps {
   post: BlogPost | null;

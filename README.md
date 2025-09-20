@@ -1,4 +1,4 @@
-# Thought Flux Studio
+# haider-thoughts
 
 ## Project info
 

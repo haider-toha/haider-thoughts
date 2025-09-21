@@ -1,20 +1,18 @@
 import { useState, lazy, Suspense } from "react";
 import Header from "@/components/Header";
 import { blogPosts } from "@/data/blogPosts";
-import FeaturedPost from "@/components/FeaturedPost";
 import BlogCard from "@/components/BlogCard";
 import NoPosts from "@/components/NoPosts";
 
 const EssayModal = lazy(() => import("@/components/EssayModal"));
 
 const Index = () => {
-  const featuredPost = blogPosts[0];
-  const otherPosts = blogPosts.slice(1);
-  
-  const [selectedPost, setSelectedPost] = useState<typeof featuredPost | null>(null);
+  const [selectedPost, setSelectedPost] = useState<(typeof blogPosts)[0] | null>(
+    null
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = (post: typeof featuredPost) => {
+  const openModal = (post: (typeof blogPosts)[0]) => {
     setSelectedPost(post);
     setIsModalOpen(true);
   };
@@ -24,7 +22,7 @@ const Index = () => {
     setTimeout(() => setSelectedPost(null), 300);
   };
 
-  if (!featuredPost) {
+  if (!blogPosts || blogPosts.length === 0) {
     return <NoPosts />;
   }
 
@@ -32,21 +30,20 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header />
 
-      <FeaturedPost post={featuredPost} onClick={() => openModal(featuredPost)} />
-
-      {/* Other Posts Section */}
-      {otherPosts.length > 0 && (
-        <section className="container mx-auto px-6 py-16">
-          <div className="max-w-6xl">
-            <h2 className="text-2xl font-bold mb-8">More Thoughts</h2>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {otherPosts.map((post) => (
-                <BlogCard key={post.id} post={post} onClick={() => openModal(post)} />
-              ))}
-            </div>
+      {/* Posts Section */}
+      <section className="container mx-auto px-6 py-16">
+        <div className="max-w-6xl">
+          <div className="grid gap-6 md:grid-cols-2">
+            {blogPosts.map((post) => (
+              <BlogCard
+                key={post.id}
+                post={post}
+                onClick={() => openModal(post)}
+              />
+            ))}
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="border-t border-border py-12 mt-16">

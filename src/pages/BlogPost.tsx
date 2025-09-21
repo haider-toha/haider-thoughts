@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import Header from "@/components/Header";
 import { blogPosts } from "@/data/blogPosts";
 import { ArrowLeft, Clock } from "lucide-react";
+import katex from "katex";
 
 const BlogPost = () => {
   const { slug } = useParams();
@@ -60,6 +61,16 @@ const BlogPost = () => {
                 className="leading-relaxed text-lg"
                 dangerouslySetInnerHTML={{ 
                   __html: post.content
+                    .replace(/\$([^$]+)\$/g, (match, math) => {
+                      try {
+                        return katex.renderToString(math.trim(), {
+                          throwOnError: false,
+                        });
+                      } catch (e) {
+                        console.error(e);
+                        return match;
+                      }
+                    })
                     .replace(/\n## /g, '\n<h2 class="text-3xl font-bold mb-6 mt-12">')
                     .replace(/\n# /g, '\n<h1 class="text-4xl font-bold mb-8 mt-16">')
                     .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')

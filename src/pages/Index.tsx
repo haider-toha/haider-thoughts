@@ -2,12 +2,14 @@ import { useState, lazy, Suspense } from "react";
 import Header from "@/components/Header";
 import { blogPosts } from "@/data/blogPosts";
 import FeaturedPost from "@/components/FeaturedPost";
+import BlogCard from "@/components/BlogCard";
 import NoPosts from "@/components/NoPosts";
 
 const EssayModal = lazy(() => import("@/components/EssayModal"));
 
 const Index = () => {
   const featuredPost = blogPosts[0];
+  const otherPosts = blogPosts.slice(1);
   
   const [selectedPost, setSelectedPost] = useState<typeof featuredPost | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,6 +33,20 @@ const Index = () => {
       <Header />
 
       <FeaturedPost post={featuredPost} onClick={() => openModal(featuredPost)} />
+
+      {/* Other Posts Section */}
+      {otherPosts.length > 0 && (
+        <section className="container mx-auto px-6 py-16">
+          <div className="max-w-6xl">
+            <h2 className="text-2xl font-bold mb-8">More Thoughts</h2>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {otherPosts.map((post) => (
+                <BlogCard key={post.id} post={post} onClick={() => openModal(post)} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Footer */}
       <footer className="border-t border-border py-12 mt-16">

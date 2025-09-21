@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import React, { useState, useEffect, useRef, UIEvent } from "react";
 import { BlogPost } from "@/data/blogPosts";
+import katex from "katex";
 
 interface EssayModalProps {
   post: BlogPost | null;
@@ -109,7 +110,7 @@ const EssayModal = ({ post, isOpen, onClose }: EssayModalProps) => {
 
   const handleShare = () => {
     if (!post) return;
-    const url = `${window.location.origin}/post/${post.slug}`;
+    const url = `${window.location.origin}/#/post/${post.slug}`;
     navigator.clipboard.writeText(url);
     setIsCopied(true);
     setTimeout(() => setIsCopied(false), 2000);
@@ -207,6 +208,16 @@ const EssayModal = ({ post, isOpen, onClose }: EssayModalProps) => {
                     className="text-lg leading-[1.7] font-normal"
                     dangerouslySetInnerHTML={{ 
                       __html: post.content
+                        .replace(/\$([^$]+)\$/g, (match, math) => {
+                          try {
+                            return katex.renderToString(math.trim(), {
+                              throwOnError: false,
+                            });
+                          } catch (e) {
+                            console.error(e);
+                            return match;
+                          }
+                        })
                         .replace(/\n## /g, '\n<h2 class="text-2xl font-semibold mb-6 mt-12 text-foreground border-b border-border/30 pb-2">')
                         .replace(/\n# /g, '\n<h1 class="text-3xl font-bold mb-8 mt-16 text-foreground">')
                         .replace(/\*\*(.*?)\*\*/g, '<strong class="font-medium text-foreground">$1</strong>')

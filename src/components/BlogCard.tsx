@@ -1,14 +1,14 @@
-import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { BlogPost } from "@/data/blogPosts";
 
 interface BlogCardProps {
   post: BlogPost;
+  onClick?: () => void;
 }
 
-const BlogCard = ({ post }: BlogCardProps) => {
+const BlogCard = ({ post, onClick }: BlogCardProps) => {
   return (
-    <Link to={`/post/${post.slug}`} className="group block h-full">
+    <button onClick={onClick} className="group block h-full w-full text-left">
       <article className="border border-border rounded-lg p-6 hover:border-primary/30 transition-colors h-full flex flex-col">
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-4">
@@ -35,7 +35,7 @@ const BlogCard = ({ post }: BlogCardProps) => {
           <span>{post.readTime}</span>
         </div>
       </article>
-    </Link>
+    </button>
   );
 };
 

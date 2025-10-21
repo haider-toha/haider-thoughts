@@ -103,10 +103,10 @@ export function getNextZIndex(cards: CardState[]): number {
 // Default positions for different card types
 // Cards are w-80 h-32 (320px x 128px), so spacing them 400px apart to avoid overlap
 export const defaultPositions: Record<string, CardPosition> = {
-  about: { x: 50, y: 50, zIndex: 1 },        // Top-left
-  experience: { x: 500, y: 50, zIndex: 2 },  // Top-right  
-  whatIDo: { x: 50, y: 300, zIndex: 3 },     // Bottom-left
-  blog: { x: 500, y: 300, zIndex: 4 },       // Bottom-right
+  about: { x: 20, y: 50, zIndex: 1 },         // Top-left
+  experience: { x: 360, y: 50, zIndex: 2 },   // Top-middle
+  whatIDo: { x: 700, y: 50, zIndex: 3 },      // Top-right
+  blog: { x: 20, y: 220, zIndex: 4 },        // Below 'about'
 };
 
 // Persistence functions

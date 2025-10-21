@@ -18,7 +18,10 @@ type CardAction =
   | { type: 'AUTO_ARRANGE' }
   | { type: 'TOGGLE_SNAP_TO_GRID' }
   | { type: 'SET_CONTAINER_SIZE'; size: { width: number; height: number } }
-  | { type: 'SET_FOCUSED_CARD'; cardId: string | null };
+  | { type: 'SET_FOCUSED_CARD'; cardId: string | null }
+  | { type: 'MINIMIZE_ALL' }
+  | { type: 'SHOW_ALL' }
+  | { type: 'RESET_POSITIONS' };
 
 const initialState: CardContextState = {
   cards: [
@@ -148,6 +151,38 @@ function cardReducer(state: CardContextState, action: CardAction): CardContextSt
       return { ...state, focusedCard: action.cardId };
     }
 
+    case 'MINIMIZE_ALL': {
+      const cards = state.cards.map(card => ({
+        ...card,
+        isMinimized: true,
+        isExpanded: false
+      }));
+      
+      return { ...state, cards, focusedCard: null };
+    }
+
+    case 'SHOW_ALL': {
+      const cards = state.cards.map(card => ({
+        ...card,
+        isVisible: true,
+        isMinimized: false,
+        isExpanded: false
+      }));
+      
+      return { ...state, cards, focusedCard: null };
+    }
+
+    case 'RESET_POSITIONS': {
+      const cards = state.cards.map(card => ({
+        ...card,
+        position: defaultPositions[card.id] || card.position,
+        isMinimized: false,
+        isExpanded: false
+      }));
+      
+      return { ...state, cards, focusedCard: null };
+    }
+
     default:
       return state;
   }
@@ -165,6 +200,9 @@ interface CardContextValue {
   toggleSnapToGrid: () => void;
   setContainerSize: (size: { width: number; height: number }) => void;
   setFocusedCard: (cardId: string | null) => void;
+  minimizeAll: () => void;
+  showAll: () => void;
+  resetPositions: () => void;
 }
 
 const CardContext = createContext<CardContextValue | undefined>(undefined);
@@ -223,6 +261,18 @@ export function CardProvider({ children }: { children: React.ReactNode }) {
     dispatch({ type: 'SET_FOCUSED_CARD', cardId });
   }, []);
 
+  const minimizeAll = useCallback(() => {
+    dispatch({ type: 'MINIMIZE_ALL' });
+  }, []);
+
+  const showAll = useCallback(() => {
+    dispatch({ type: 'SHOW_ALL' });
+  }, []);
+
+  const resetPositions = useCallback(() => {
+    dispatch({ type: 'RESET_POSITIONS' });
+  }, []);
+
   const value: CardContextValue = {
     state,
     dispatch,
@@ -235,6 +285,9 @@ export function CardProvider({ children }: { children: React.ReactNode }) {
     toggleSnapToGrid,
     setContainerSize,
     setFocusedCard,
+    minimizeAll,
+    showAll,
+    resetPositions,
   };
 
   return <CardContext.Provider value={value}>{children}</CardContext.Provider>;

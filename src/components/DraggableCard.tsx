@@ -165,7 +165,7 @@ export function DraggableCard({
       dragMomentum={false}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
-      className={`${window.innerWidth > 768 ? 'absolute cursor-move' : 'relative mb-6'} ${isDimmed ? 'opacity-30' : 'opacity-100'}`}
+      className={`${window.innerWidth > 768 ? 'absolute cursor-grab' : 'relative mb-6'} ${isDimmed ? 'opacity-30' : 'opacity-100'}`}
       style={window.innerWidth > 768 ? {
         x: card.position.x,
         y: card.position.y,
@@ -176,9 +176,12 @@ export function DraggableCard({
         zIndex: 100,
         cursor: "grabbing"
       }}
-      whileHover={{ scale: window.innerWidth > 768 ? 1.02 : 1 }}
+      whileHover={{ 
+        scale: window.innerWidth > 768 ? 1.02 : 1,
+        y: window.innerWidth > 768 ? card.position.y - 5 : card.position.y 
+      }}
       animate={window.innerWidth > 768 ? {
-        y: [0, -2, 0],
+        y: [card.position.y, card.position.y - 2, card.position.y],
         transition: {
           duration: 4,
           repeat: Infinity,
@@ -188,7 +191,7 @@ export function DraggableCard({
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       onClick={handleClick}
     >
-      <Card className={`${window.innerWidth > 768 ? 'w-80 h-32' : 'w-full max-w-md mx-auto h-24'} shadow-lg hover:shadow-xl transition-all duration-300 ${themeClass} cursor-pointer bg-card`}>
+      <Card className={`${window.innerWidth > 768 ? 'w-80 h-32' : 'w-full max-w-md mx-auto h-24'} shadow-lg hover:shadow-xl transition-all duration-300 ${themeClass} bg-card`}>
         <div className="h-full flex items-center justify-center p-6">
           <div className="flex items-center gap-4">
             <IconComponent size={window.innerWidth > 768 ? 32 : 28} className="text-foreground" />

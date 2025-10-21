@@ -189,6 +189,40 @@ All colors MUST be HSL.
     border-radius: 2px;
   }
 
+  /* Custom scrollbars for terminal theme */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: #374151; /* gray-700 */
+    border-radius: 4px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #6b7280; /* gray-500 */
+    border-radius: 4px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af; /* gray-400 */
+  }
+
+  .scrollbar-track-gray-800::-webkit-scrollbar-track {
+    background: #1f2937; /* gray-800 */
+  }
+
+  .scrollbar-thumb-gray-600::-webkit-scrollbar-thumb {
+    background: #4b5563; /* gray-600 */
+  }
+
+  /* Firefox scrollbar styling */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #6b7280 #374151;
+  }
+
   /* Reduced motion support */
   @media (prefers-reduced-motion: reduce) {
     *,

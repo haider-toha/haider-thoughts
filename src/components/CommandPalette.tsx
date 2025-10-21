@@ -37,6 +37,14 @@ export function CommandPalette({ isOpen = true, onClose, onExecuteCommand, embed
       action: () => onExecuteCommand('expand-about')
     },
     {
+      id: 'run-experience',
+      label: 'haider run experience',
+      description: 'Open Experience section',
+      icon: Briefcase,
+      keywords: ['haider', 'run', 'experience', 'work', 'career'],
+      action: () => onExecuteCommand('expand-experience')
+    },
+    {
       id: 'run-projects',
       label: 'haider run projects',
       description: 'Open Projects section',
@@ -51,14 +59,6 @@ export function CommandPalette({ isOpen = true, onClose, onExecuteCommand, embed
       icon: FileText,
       keywords: ['haider', 'run', 'blog', 'posts', 'writing'],
       action: () => onExecuteCommand('expand-blog')
-    },
-    {
-      id: 'run-experience',
-      label: 'haider run experience',
-      description: 'Open Experience section',
-      icon: Briefcase,
-      keywords: ['haider', 'run', 'experience', 'work', 'career'],
-      action: () => onExecuteCommand('expand-experience')
     },
     {
       id: 'help',

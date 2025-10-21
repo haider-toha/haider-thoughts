@@ -4,45 +4,41 @@ import { Github, Linkedin, Mail, MapPin, Calendar } from "lucide-react";
 
 export function AboutSection() {
   const skills = [
-    "React", "TypeScript", "Node.js", "Python", "Next.js", "Tailwind CSS",
-    "PostgreSQL", "AWS", "Docker", "GraphQL", "Git", "Figma"
+    "React", "TypeScript", "Python", "Node.js", "Next.js", "Tailwind CSS",
+    "PostgreSQL", "AWS", "Docker", "GraphQL", "FastAPI", "Flask", "PyTorch", "TensorFlow"
   ];
 
   const interests = [
-    "🎮 Gaming", "📚 Reading", "🎵 Music", "📷 Photography", 
-    "✈️ Travel", "🏃‍♂️ Running", "☕ Coffee", "🎨 Design"
+    "🏏 Cricket", "📚 Reading", "🕹️ Gaming", "✈️ Travel",
+    "☕ Coffee", "🏋️‍♂️ Gym", "🖋️ Writing", "🧭 Gliding"
   ];
 
   return (
     <div className="space-y-6">
       {/* Profile Header */}
       <div className="flex flex-col md:flex-row gap-6 items-start">
-        <div className="w-32 h-32 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-4xl font-bold shadow-lg">
-          HT
-        </div>
-        
         <div className="flex-1 space-y-4">
           <div>
             <h3 className="text-2xl font-bold mb-2">Haider Toha</h3>
             <p className="text-muted-foreground text-lg">
-              Full-Stack Developer & Creative Thinker
+              Full-Stack and AI Engineer
             </p>
           </div>
           
           <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
               <MapPin size={16} />
-              <span>Remote / Global</span>
+              <span>London, UK / Remote</span>
             </div>
             <div className="flex items-center gap-2">
               <Calendar size={16} />
-              <span>Available for new projects</span>
+              <span>Joining Sammy Labs (YC W25) soon</span>
             </div>
           </div>
           
           <div className="flex gap-3">
             <a
-              href="https://github.com/mohammedhaidertoha"
+              href="https://github.com/haider-toha"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-4 py-2 bg-secondary rounded-lg hover:bg-secondary/80 transition-colors"
@@ -51,7 +47,7 @@ export function AboutSection() {
               <span>GitHub</span>
             </a>
             <a
-              href="mailto:contact@haidertoha.com"
+              href="mailto:mohammedhaidertoha@gmail.com"
               className="flex items-center gap-2 px-4 py-2 bg-secondary rounded-lg hover:bg-secondary/80 transition-colors"
             >
               <Mail size={16} />
@@ -74,22 +70,31 @@ export function AboutSection() {
       <Card className="p-6">
         <h4 className="text-lg font-semibold mb-3">About Me</h4>
         <div className="space-y-3 text-muted-foreground">
-          <p>
-            I'm a passionate full-stack developer with a love for creating digital experiences 
-            that make a difference. With several years of experience in web development, I enjoy 
-            working with modern technologies and solving complex problems.
-          </p>
-          <p>
-            When I'm not coding, you'll find me exploring new technologies, contributing to 
-            open-source projects, or sharing my knowledge through blog posts and tutorials. 
-            I believe in continuous learning and am always excited to take on new challenges.
-          </p>
-          <p>
-            I have a particular interest in user experience design, performance optimization, 
-            and building scalable applications. My goal is to create software that not only 
-            works well but also provides an exceptional user experience.
-          </p>
-        </div>
+  <p>
+    I’m a full-stack and AI engineer and an Imperial College London graduate in Aeronautics. 
+    My time at Imperial taught me how to think rigorously, design systems from first principles, 
+    and blend engineering intuition with data-driven reasoning.
+  </p>
+  <p>
+    I currently work at Goldman Sachs, where I build analytics platforms and machine learning tools 
+    that help scale compliance and risk operations. My work spans React and Flask frontends, 
+    distributed data systems and deep learning pipelines on AWS. 
+  </p>
+  <p>
+    Alongside my role, I founded <strong>Provost Academics</strong>, an AI tutoring platform 
+    that helps students connect with top-tier tutors and achieve real academic progress.
+  </p>
+  <p>
+    I’ll soon be joining <strong>Sammy Labs</strong> (YC W25) as a founding engineer, 
+    where I’ll be helping build scalable AI infrastructure and products from the ground up.
+  </p>
+  <p>
+    I’m drawn to problems that involve engineering and human experience. 
+    I care about building technology that actually moves the needle,
+    the kind that’s reliable, meaningful and quietly elegant in how it works.
+  </p>
+</div>
+
       </Card>
 
       {/* Skills */}
@@ -110,7 +115,7 @@ export function AboutSection() {
 
       {/* Interests */}
       <Card className="p-6">
-        <h4 className="text-lg font-semibold mb-4">Interests & Hobbies</h4>
+        <h4 className="text-lg font-semibold mb-4">Interests and Hobbies</h4>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {interests.map((interest) => (
             <div
@@ -123,27 +128,25 @@ export function AboutSection() {
         </div>
       </Card>
 
-      {/* Fun Facts */}
+      {/* Personal Reflections */}
       <Card className="p-6">
-        <h4 className="text-lg font-semibold mb-4">Fun Facts</h4>
-        <ul className="space-y-2 text-muted-foreground">
-          <li className="flex items-start gap-2">
-            <span className="text-primary">•</span>
-            <span>I've been coding for over 5 years and still get excited by new frameworks</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-primary">•</span>
-            <span>Coffee enthusiast - I can tell you the best coffee shops in any city I visit</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-primary">•</span>
-            <span>I believe the best code is code you don't have to write</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-primary">•</span>
-            <span>Always learning something new - currently exploring AI/ML applications</span>
-          </li>
-        </ul>
+        <h4 className="text-lg font-semibold mb-4">Outside of Work</h4>
+        <div className="space-y-3 text-muted-foreground">
+          <p>
+            Outside work, I stay active with the gym, cricket and the occasional 
+            late-night walk through Hyde Park when I need to clear my head. 
+            I coach my local kids football team which has been one of the most grounding things I do each week. I have also started gliding and plan to get my pilot’s license.
+
+          </p>
+          <p>
+            I love to travel and explore new places. I have visited three countries this year and hope to fit in another before it ends. 
+            I enjoy trying new food, learning about cultures and staying curious about the world.
+          </p>
+          <p>
+            On quieter days, I run a small book club with friends where we read everything 
+            from economics to Islamic philosophy. I also recently started journaling and Arabic calligraphy which help me slow down and stay present.
+          </p>
+        </div>
       </Card>
     </div>
   );

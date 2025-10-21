@@ -2,7 +2,7 @@
 
 ## Project info
 
-Personal writing site built with Vite, React, TypeScript, Tailwind, and shadcn-ui.
+Personal writing site built with Vite, React, TypeScript, Tailwind and shadcn-ui.
 
 ## Local development
 

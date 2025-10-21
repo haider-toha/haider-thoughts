@@ -70,29 +70,21 @@ export function AboutSection() {
       <Card className="p-6">
         <h4 className="text-lg font-semibold mb-3">About Me</h4>
         <div className="space-y-3 text-muted-foreground">
-  <p>
-    I’m a full-stack and AI engineer and an Imperial College London graduate in Aeronautics. 
-    My time at Imperial taught me how to think rigorously, design systems from first principles, 
-    and blend engineering intuition with data-driven reasoning.
-  </p>
-  <p>
-    I currently work at Goldman Sachs, where I build analytics platforms and machine learning tools 
-    that help scale compliance and risk operations. My work spans React and Flask frontends, 
-    distributed data systems and deep learning pipelines on AWS. 
-  </p>
-  <p>
-    Alongside my role, I founded <strong>Provost Academics</strong>, an AI tutoring platform 
-    that helps students connect with top-tier tutors and achieve real academic progress.
-  </p>
-  <p>
-    I’ll soon be joining <strong>Sammy Labs</strong> (YC W25) as a founding engineer, 
-    where I’ll be helping build scalable AI infrastructure and products from the ground up.
-  </p>
-  <p>
-    I’m drawn to problems that involve engineering and human experience. 
-    I care about building technology that actually moves the needle,
-    the kind that’s reliable, meaningful and quietly elegant in how it works.
-  </p>
+        <p>
+  I'm a full-stack and AI engineer with an MEng in Aeronautics from Imperial College London. My background taught me to think rigorously about complex systems, blending first-principles engineering with data-driven development.
+</p>
+<p>
+  At Goldman Sachs, I build analytics platforms and machine learning tools to scale tech risk and compliance. My work involves developing full-stack applications (React, Flask, PostgreSQL) and deploying NLP and deep learning pipelines on AWS, creating systems that cut reporting cycles from 10 days to 2 hours  and detect anomalies with 92% precision.
+</p>
+<p>
+  Alongside this, I founded <strong>Provost Academics</strong>, an AI tutoring platform. I led the technical vision, building a RAG grading engine with 95% human-examiner agreement  and scaling the marketplace to 50+ paying clients and £5k MRR.
+</p>
+<p>
+  I will soon be joining <strong>Sammy Labs</strong> (YC W25) as a founding engineer to help build their core AI infrastructure and products from the ground up.
+</p>
+<p>
+  I’m drawn to complex problems that involve engineering and human experience. I thrive on building technology that moves the needle, systems that are reliable, meaningful and quietly elegant in their operation.
+</p>
 </div>
 
       </Card>

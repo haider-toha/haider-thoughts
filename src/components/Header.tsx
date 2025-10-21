@@ -11,7 +11,7 @@ const Header = () => {
             to="/"
             className="text-xl font-mono font-semibold tracking-tight hover:text-primary transition-colors"
           >
-            haider<span className="text-primary">.</span>/
+            haider<span className="text-primary">.</span>cli
           </Link>
           
           <ModeToggle />

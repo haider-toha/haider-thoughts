@@ -152,19 +152,18 @@ function IndexContent() {
                   </span>
                 </div>
                 <span>•</span>
-                <span>By Haider Toha</span>
+                <span>
+                  By{" "}
+                  <a
+                    href="https://www.linkedin.com/in/haidertoha/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-foreground hover:underline hover:text-primary transition-colors"
+                  >
+                    Haider Toha
+                  </a>
+                </span>
               </div>
-              <p className="text-muted-foreground font-mono text-sm">
-                Crafted with curiosity &{" "}
-                <a
-                  href="https://github.com/mohammedhaidertoha/haider-thoughts"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary underline"
-                >
-                  <code dangerouslySetInnerHTML={{ __html: "&lt;code /&gt;" }} />
-                </a>
-              </p>
             </div>
           </div>
         </div>

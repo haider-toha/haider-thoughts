@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import React, { useState, useEffect, useRef, UIEvent } from "react";
 import { BlogPost } from "@/data/blogPosts";
 import katex from "katex";
+import { ArrowLeft } from "lucide-react";
 
 interface EssayModalProps {
   post: BlogPost | null;
@@ -177,18 +178,26 @@ const EssayModal = ({ post, isOpen, onClose }: EssayModalProps) => {
                     </div>
                   </div>
                   <div className="flex items-center gap-4 text-xs text-muted-foreground font-mono mt-2">
-                    <button onClick={handleShare} className="flex items-center gap-1 hover:text-primary transition-colors">
-                      <Share2 className="h-3 w-3" />
-                      Share
-                    </button>
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={onClose}
-                      className="h-6 w-6 p-0 hover:text-primary transition-colors"
+                      className="flex items-center gap-1 px-2 text-sm hover:text-primary transition-colors"
                     >
-                      <X className="h-3 w-3" />
+                      <ArrowLeft className="h-4 w-4" />
+                      <span>Back</span>
                     </Button>
+
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleShare}
+                      className="flex items-center gap-1 px-2 text-sm hover:text-primary transition-colors"
+                    >
+                      <Share2 className="h-4 w-4" />
+                      <span>Share</span>
+                    </Button>
+
                     {isCopied && <span className="text-xs text-primary/80">Copied!</span>}
                   </div>
                 </header>

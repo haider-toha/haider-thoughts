@@ -6,16 +6,12 @@ import { AboutSection } from "@/components/sections/AboutSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { WhatIDoSection } from "@/components/sections/WhatIDoSection";
 import { CommandPalette } from "@/components/CommandPalette";
-import { Terminal } from "@/components/Terminal";
-import { FileExplorer } from "@/components/FileExplorer";
 import { CardProvider, useCardContext } from "@/contexts/CardContext";
-import { FileSystemProvider } from "@/contexts/FileSystemContext";
 
 function IndexContent() {
   const { setContainerSize, expandCard, autoArrange, resetPositions, minimizeAll, showAll, state } = useCardContext();
   const containerRef = useRef<HTMLDivElement>(null);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
-  const [activeCard, setActiveCard] = useState<string | null>(null);
 
   useEffect(() => {
     const updateContainerSize = () => {
@@ -43,26 +39,20 @@ function IndexContent() {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // File open handler for terminal and file explorer
-  const handleFileOpen = useCallback((cardId: string) => {
-    setActiveCard(cardId);
-    expandCard(cardId);
-  }, [expandCard]);
-
   // Command execution handler
   const handleExecuteCommand = useCallback((commandId: string) => {
     switch (commandId) {
       case 'expand-about':
-        handleFileOpen('about');
+        expandCard('about');
         break;
       case 'expand-experience':
-        handleFileOpen('experience');
+        expandCard('experience');
         break;
       case 'expand-whatIDo':
-        handleFileOpen('whatIDo');
+        expandCard('whatIDo');
         break;
       case 'expand-blog':
-        handleFileOpen('blog');
+        expandCard('blog');
         break;
       case 'auto-arrange':
         autoArrange();
@@ -83,7 +73,7 @@ function IndexContent() {
       default:
         console.log('Unknown command:', commandId);
     }
-  }, [handleFileOpen, autoArrange, resetPositions, minimizeAll, showAll]);
+  }, [expandCard, autoArrange, resetPositions, minimizeAll, showAll]);
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -91,16 +81,76 @@ function IndexContent() {
 
       <main 
         ref={containerRef}
-        className="flex-grow w-full h-full flex overflow-hidden"
+        className="flex-grow w-full h-full relative overflow-hidden md:overflow-visible"
       >
-        {/* Terminal Interface - 70% */}
-        <div className="flex-1 w-[70%] h-full">
-          <Terminal onFileOpen={handleFileOpen} />
+        {/* Desktop: Absolute positioned draggable cards */}
+        <div className="hidden md:block w-full h-full">
+          <DraggableCard
+            cardId="about"
+            title="./me"
+            type="about"
+          >
+            <AboutSection />
+          </DraggableCard>
+
+          <DraggableCard
+            cardId="experience"
+            title="./experience"
+            type="experience"
+          >
+            <ExperienceSection />
+          </DraggableCard>
+
+          <DraggableCard
+            cardId="whatIDo"
+            title="./projects"
+            type="whatIDo"
+          >
+            <WhatIDoSection />
+          </DraggableCard>
+
+          <DraggableCard
+            cardId="blog"
+            title="./blog"
+            type="blog"
+          >
+            <BlogSection />
+          </DraggableCard>
         </div>
 
-        {/* File Explorer Sidebar - 30% */}
-        <div className="w-[30%] h-full">
-          <FileExplorer onFileOpen={handleFileOpen} />
+        {/* Mobile: Stack cards vertically */}
+        <div className="md:hidden flex flex-col gap-6 p-6 overflow-y-auto">
+          <DraggableCard
+            cardId="about"
+            title="./me"
+            type="about"
+          >
+            <AboutSection />
+          </DraggableCard>
+
+          <DraggableCard
+            cardId="experience"
+            title="./experience"
+            type="experience"
+          >
+            <ExperienceSection />
+          </DraggableCard>
+
+          <DraggableCard
+            cardId="whatIDo"
+            title="./projects"
+            type="whatIDo"
+          >
+            <WhatIDoSection />
+          </DraggableCard>
+
+          <DraggableCard
+            cardId="blog"
+            title="./blog"
+            type="blog"
+          >
+            <BlogSection />
+          </DraggableCard>
         </div>
       </main>
 
@@ -140,41 +190,6 @@ function IndexContent() {
         </div>
       </footer>
 
-      {/* Hidden DraggableCard components for modal overlays */}
-      <div className="hidden">
-        <DraggableCard
-          cardId="about"
-          title="./me"
-          type="about"
-        >
-          <AboutSection />
-        </DraggableCard>
-
-        <DraggableCard
-          cardId="experience"
-          title="./experience"
-          type="experience"
-        >
-          <ExperienceSection />
-        </DraggableCard>
-
-        <DraggableCard
-          cardId="whatIDo"
-          title="./projects"
-          type="whatIDo"
-        >
-          <WhatIDoSection />
-        </DraggableCard>
-
-        <DraggableCard
-          cardId="blog"
-          title="./blog"
-          type="blog"
-        >
-          <BlogSection />
-        </DraggableCard>
-      </div>
-
       {/* Command Palette */}
       <CommandPalette
         isOpen={isCommandPaletteOpen}
@@ -188,9 +203,7 @@ function IndexContent() {
 const Index = () => {
   return (
     <CardProvider>
-      <FileSystemProvider>
-        <IndexContent />
-      </FileSystemProvider>
+      <IndexContent />
     </CardProvider>
   );
 };

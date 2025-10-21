@@ -35,12 +35,6 @@ const BlogPost = () => {
           {/* Post Header */}
           <article>
             <header className="mb-16">
-              <Badge 
-                variant="secondary" 
-                className="hidden md:inline-flex mb-6 bg-primary/10 text-primary border-primary/20 font-mono"
-              >
-                {post.category}
-              </Badge>
               
               <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
                 {post.title}

@@ -220,7 +220,6 @@ export function CommandPalette({ isOpen = true, onClose, onExecuteCommand, embed
                   Execute
                 </span>
               </div>
-              <span>{embedded ? "Type commands above" : "Press ESC to close"}</span>
             </div>
           </Card>
   );

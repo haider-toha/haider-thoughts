@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Clock, BookOpen, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import React, { useState, useEffect, useRef, UIEvent } from "react";
 import { BlogPost } from "@/data/blogPosts";
 import katex from "katex";
@@ -142,15 +141,7 @@ const EssayModal = ({ post, isOpen, onClose }: EssayModalProps) => {
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
             className="essay-modal-content fixed right-0 top-0 h-full w-full md:w-2/3 lg:w-1/2 bg-background border-l border-border z-50 flex flex-col"
           >
-            <div className="sticky top-0 bg-background/95 backdrop-blur-sm border-b border-border p-6 flex items-center justify-between z-10">
-              <div className="flex items-center gap-3">
-                <Badge 
-                  variant="secondary" 
-                  className="bg-primary/10 text-primary border-primary/20 font-mono text-xs"
-                >
-                  {post.category}
-                </Badge>
-              </div>
+            <div className="sticky top-0 bg-background/95 backdrop-blur-sm border-b border-border p-6 flex items-center justify-end z-10">
               <Button
                 variant="ghost"
                 size="sm"

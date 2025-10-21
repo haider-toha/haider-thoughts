@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import { BlogPost } from "@/data/blogPosts";
 
 interface BlogCardProps {
@@ -11,15 +10,6 @@ const BlogCard = ({ post, onClick }: BlogCardProps) => {
     <button onClick={onClick} className="group block h-full w-full text-left">
       <article className="border border-border rounded-lg p-8 hover:border-primary/30 transition-colors h-full flex flex-col">
         <div className="flex-1">
-          <div className="flex items-center gap-3 mb-4">
-            <Badge
-              variant="secondary"
-              className="bg-primary/10 text-primary border-primary/20 font-mono text-xs"
-            >
-              {post.category}
-            </Badge>
-          </div>
-
           <h3 className="text-2xl font-semibold leading-tight mb-4 group-hover:text-primary transition-colors">
             {post.title}
           </h3>

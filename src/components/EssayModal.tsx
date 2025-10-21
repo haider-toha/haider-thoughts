@@ -141,15 +141,7 @@ const EssayModal = ({ post, isOpen, onClose }: EssayModalProps) => {
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
             className="essay-modal-content fixed right-0 top-0 h-full w-full md:w-2/3 lg:w-1/2 bg-background border-l border-border z-50 flex flex-col"
           >
-            <div className="bg-background/95 backdrop-blur-sm border-b border-border p-6 flex items-center justify-end z-10">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onClose}
-                className="h-8 w-8 p-0"
-              >
-                <X className="h-4 w-4" />
-              </Button>
+            <div className="bg-background/95 backdrop-blur-sm border-b border-border p-6 z-10">
             </div>
             
             {/* Reading Progress Bar - Placed below the header but outside the scrollable content */}
@@ -189,6 +181,14 @@ const EssayModal = ({ post, isOpen, onClose }: EssayModalProps) => {
                       <Share2 className="h-3 w-3" />
                       Share
                     </button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={onClose}
+                      className="h-6 w-6 p-0 hover:text-primary transition-colors"
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
                     {isCopied && <span className="text-xs text-primary/80">Copied!</span>}
                   </div>
                 </header>

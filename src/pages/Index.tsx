@@ -144,7 +144,7 @@ function IndexContent() {
                   <div className="w-2 h-2 rounded-full bg-green-500"></div>
                   <span>
                     Last updated{" "}
-                    {new Date().toLocaleDateString("en-US", {
+                    {new Date("2025-10-21").toLocaleDateString("en-US", {
                       month: "short",
                       day: "numeric",
                       year: "numeric",

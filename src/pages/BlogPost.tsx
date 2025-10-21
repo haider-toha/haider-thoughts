@@ -37,7 +37,7 @@ const BlogPost = () => {
             <header className="mb-16">
               <Badge 
                 variant="secondary" 
-                className="mb-6 bg-primary/10 text-primary border-primary/20 font-mono"
+                className="hidden md:inline-flex mb-6 bg-primary/10 text-primary border-primary/20 font-mono"
               >
                 {post.category}
               </Badge>

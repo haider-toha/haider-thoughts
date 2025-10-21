@@ -36,7 +36,7 @@ export function AboutSection() {
             </div>
           </div>
           
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3 w-full md:w-auto">
             <a
               href="https://github.com/haider-toha"
               target="_blank"

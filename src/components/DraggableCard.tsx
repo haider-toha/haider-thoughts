@@ -101,14 +101,14 @@ export function DraggableCard({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/50 z-40 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center p-4"
           onClick={() => expandCard(cardId)}
         >
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
-            className="w-full max-w-4xl max-h-[90vh] z-50"
+            className="w-full max-w-4xl max-h-[90vh] z-[110]"
             onClick={(e) => e.stopPropagation()}
           >
             <Card className={`h-full shadow-2xl ${themeClass} bg-card`}>

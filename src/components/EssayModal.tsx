@@ -141,7 +141,7 @@ const EssayModal = ({ post, isOpen, onClose }: EssayModalProps) => {
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
             className="essay-modal-content fixed right-0 top-0 h-full w-full md:w-2/3 lg:w-1/2 bg-background border-l border-border z-50 flex flex-col"
           >
-            <div className="sticky top-0 bg-background/95 backdrop-blur-sm border-b border-border p-6 flex items-center justify-end z-10">
+            <div className="bg-background/95 backdrop-blur-sm border-b border-border p-6 flex items-center justify-end z-10">
               <Button
                 variant="ghost"
                 size="sm"

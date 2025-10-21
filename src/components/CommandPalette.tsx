@@ -9,18 +9,19 @@ interface Command {
   id: string;
   label: string;
   description: string;
-  icon: React.ComponentType<{ size?: number; className?: string }>;
+  icon: React.ComponentType<any>;
   keywords: string[];
   action: () => void;
 }
 
 interface CommandPaletteProps {
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen?: boolean;
+  onClose?: () => void;
   onExecuteCommand: (commandId: string) => void;
+  embedded?: boolean;
 }
 
-export function CommandPalette({ isOpen, onClose, onExecuteCommand }: CommandPaletteProps) {
+export function CommandPalette({ isOpen = true, onClose, onExecuteCommand, embedded = false }: CommandPaletteProps) {
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -60,44 +61,20 @@ export function CommandPalette({ isOpen, onClose, onExecuteCommand }: CommandPal
       action: () => onExecuteCommand('expand-experience')
     },
     {
-      id: 'arrange',
-      label: 'haider arrange',
-      description: 'Auto-arrange all cards',
-      icon: Layout,
-      keywords: ['haider', 'arrange', 'organize', 'layout'],
-      action: () => onExecuteCommand('auto-arrange')
-    },
-    {
-      id: 'reset',
-      label: 'haider reset',
-      description: 'Reset cards to default positions',
-      icon: RotateCcw,
-      keywords: ['haider', 'reset', 'default', 'restore'],
-      action: () => onExecuteCommand('reset-positions')
-    },
-    {
-      id: 'hide-all',
-      label: 'haider hide all',
-      description: 'Minimize all cards',
-      icon: EyeOff,
-      keywords: ['haider', 'hide', 'all', 'minimize', 'close'],
-      action: () => onExecuteCommand('minimize-all')
-    },
-    {
-      id: 'show-all',
-      label: 'haider show all',
-      description: 'Show all cards',
-      icon: Eye,
-      keywords: ['haider', 'show', 'all', 'display', 'open'],
-      action: () => onExecuteCommand('show-all')
-    },
-    {
       id: 'help',
       label: 'haider --help',
       description: 'Show available commands',
       icon: HelpCircle,
       keywords: ['haider', 'help', 'commands', 'list'],
       action: () => onExecuteCommand('show-help')
+    },
+    {
+      id: 'joke',
+      label: 'haider run joke',
+      description: 'Get a random dad joke',
+      icon: Terminal,
+      keywords: ['haider', 'tell', 'joke', 'funny', 'humor', 'dad'],
+      action: () => onExecuteCommand('tell-joke')
     }
   ];
 
@@ -145,38 +122,27 @@ export function CommandPalette({ isOpen, onClose, onExecuteCommand }: CommandPal
           e.preventDefault();
           if (filteredCommands[selectedIndex]) {
             filteredCommands[selectedIndex].action();
-            onClose();
+            if (!embedded && onClose) {
+              onClose();
+            }
           }
           break;
         case 'Escape':
-          onClose();
+          if (!embedded && onClose) {
+            onClose();
+          }
           break;
       }
     };
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, selectedIndex, filteredCommands, onClose]);
+  }, [isOpen, selectedIndex, filteredCommands, onClose, embedded]);
 
-  if (!isOpen) return null;
+  if (!embedded && !isOpen) return null;
 
-  return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/50 z-50 flex items-start justify-center pt-20"
-        onClick={onClose}
-      >
-        <motion.div
-          initial={{ scale: 0.95, opacity: 0, y: -20 }}
-          animate={{ scale: 1, opacity: 1, y: 0 }}
-          exit={{ scale: 0.95, opacity: 0, y: -20 }}
-          className="w-full max-w-2xl mx-4"
-          onClick={e => e.stopPropagation()}
-        >
-          <Card className="bg-card border shadow-2xl">
+  const cardContent = (
+    <Card className="bg-card border shadow-2xl w-full max-w-2xl">
             {/* Header with search input */}
             <div className="flex items-center gap-3 p-4 border-b">
               <Search size={20} className="text-muted-foreground" />
@@ -215,7 +181,9 @@ export function CommandPalette({ isOpen, onClose, onExecuteCommand }: CommandPal
                         }`}
                         onClick={() => {
                           command.action();
-                          onClose();
+                          if (!embedded && onClose) {
+                            onClose();
+                          }
                         }}
                         onMouseEnter={() => setSelectedIndex(index)}
                       >
@@ -252,9 +220,32 @@ export function CommandPalette({ isOpen, onClose, onExecuteCommand }: CommandPal
                   Execute
                 </span>
               </div>
-              <span>Press ESC to close</span>
+              <span>{embedded ? "Type commands above" : "Press ESC to close"}</span>
             </div>
           </Card>
+  );
+
+  if (embedded) {
+    return cardContent;
+  }
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 bg-black/50 z-50 flex items-start justify-center pt-20"
+        onClick={onClose}
+      >
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0, y: -20 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          exit={{ scale: 0.95, opacity: 0, y: -20 }}
+          className="w-full max-w-2xl mx-4"
+          onClick={e => e.stopPropagation()}
+        >
+          {cardContent}
         </motion.div>
       </motion.div>
     </AnimatePresence>

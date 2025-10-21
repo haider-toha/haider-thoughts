@@ -1,17 +1,18 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import Header from "@/components/Header";
 import { DraggableCard } from "@/components/DraggableCard";
 import { BlogSection } from "@/components/BlogSection";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { WhatIDoSection } from "@/components/sections/WhatIDoSection";
+import { JokeSection } from "@/components/sections/JokeSection";
+import { HelpSection } from "@/components/sections/HelpSection";
 import { CommandPalette } from "@/components/CommandPalette";
 import { CardProvider, useCardContext } from "@/contexts/CardContext";
 
 function IndexContent() {
   const { setContainerSize, expandCard, autoArrange, resetPositions, minimizeAll, showAll, state } = useCardContext();
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
 
   useEffect(() => {
     const updateContainerSize = () => {
@@ -26,18 +27,6 @@ function IndexContent() {
     return () => window.removeEventListener('resize', updateContainerSize);
   }, [setContainerSize]);
 
-  // Keyboard shortcut for command palette
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        setIsCommandPaletteOpen(true);
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, []);
 
   // Command execution handler
   const handleExecuteCommand = useCallback((commandId: string) => {
@@ -67,8 +56,10 @@ function IndexContent() {
         showAll();
         break;
       case 'show-help':
-        // Show help by opening command palette with help query
-        setIsCommandPaletteOpen(true);
+        expandCard('help');
+        break;
+      case 'tell-joke':
+        expandCard('joke');
         break;
       default:
         console.log('Unknown command:', commandId);
@@ -83,43 +74,16 @@ function IndexContent() {
         ref={containerRef}
         className="flex-grow w-full h-full relative overflow-hidden md:overflow-visible"
       >
-        {/* Desktop: Absolute positioned draggable cards */}
-        <div className="hidden md:block w-full h-full">
-          <DraggableCard
-            cardId="about"
-            title="./me"
-            type="about"
-          >
-            <AboutSection />
-          </DraggableCard>
-
-          <DraggableCard
-            cardId="experience"
-            title="./experience"
-            type="experience"
-          >
-            <ExperienceSection />
-          </DraggableCard>
-
-          <DraggableCard
-            cardId="whatIDo"
-            title="./projects"
-            type="whatIDo"
-          >
-            <WhatIDoSection />
-          </DraggableCard>
-
-          <DraggableCard
-            cardId="blog"
-            title="./blog"
-            type="blog"
-          >
-            <BlogSection />
-          </DraggableCard>
+        {/* Embedded Command Palette - Main Focus */}
+        <div className="flex items-center justify-center min-h-full p-6">
+          <CommandPalette
+            embedded={true}
+            onExecuteCommand={handleExecuteCommand}
+          />
         </div>
 
-        {/* Mobile: Stack cards vertically */}
-        <div className="md:hidden flex flex-col gap-6 p-6 overflow-y-auto">
+        {/* Hidden draggable cards - for command execution */}
+        <div style={{ position: 'absolute', left: '-9999px', top: '-9999px' }}>
           <DraggableCard
             cardId="about"
             title="./me"
@@ -150,6 +114,22 @@ function IndexContent() {
             type="blog"
           >
             <BlogSection />
+          </DraggableCard>
+
+          <DraggableCard
+            cardId="joke"
+            title="./joke.js"
+            type="about"
+          >
+            <JokeSection />
+          </DraggableCard>
+
+          <DraggableCard
+            cardId="help"
+            title="./help.md"
+            type="about"
+          >
+            <HelpSection />
           </DraggableCard>
         </div>
       </main>
@@ -190,12 +170,6 @@ function IndexContent() {
         </div>
       </footer>
 
-      {/* Command Palette */}
-      <CommandPalette
-        isOpen={isCommandPaletteOpen}
-        onClose={() => setIsCommandPaletteOpen(false)}
-        onExecuteCommand={handleExecuteCommand}
-      />
     </div>
   );
 }

@@ -29,6 +29,8 @@ const initialState: CardContextState = {
     { id: 'experience', position: defaultPositions.experience, isVisible: true, isMinimized: false, isExpanded: false },
     { id: 'whatIDo', position: defaultPositions.whatIDo, isVisible: true, isMinimized: false, isExpanded: false },
     { id: 'blog', position: defaultPositions.blog, isVisible: true, isMinimized: false, isExpanded: false },
+    { id: 'joke', position: defaultPositions.about, isVisible: true, isMinimized: false, isExpanded: false },
+    { id: 'help', position: defaultPositions.about, isVisible: true, isMinimized: false, isExpanded: false },
   ],
   focusedCard: null,
   snapToGridEnabled: false,
